@@ -1,0 +1,595 @@
+# MTL file - created by a modified js OBJExporter
+
+newmtl Wood-2
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.141263 0.066626 0.017642
+Ke 0 0 0
+
+newmtl Wood-1
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0765801 0.0352982 0.0114394
+Ke 0 0 0
+
+newmtl Stairs
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.110689 0.0371385 0.00613168
+Ke 0 0 0
+
+newmtl Water
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.5
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0170893 0.054196 0.119276
+Ke 0 0 0
+
+newmtl Metall
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.5
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0444548 0.0444548 0.0444548
+Ke 0 0 0
+
+newmtl Wood-4
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0522181 0.0250735 0.0086661
+Ke 0 0 0
+
+newmtl Wood-3
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0835317 0.0319774 0.00923956
+Ke 0 0 0
+
+newmtl LeaveDark
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0172071 0.0668068 0.0118122
+Ke 0 0 0
+
+newmtl CrownBlue
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0202093 0.080006 0.0680438
+Ke 0 0 0
+
+newmtl Wood-5
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0985043 0.0391645 0.0177039
+Ke 0 0 0
+
+newmtl Wood-6
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0495493 0.0137138 0.00211035
+Ke 0 0 0
+
+newmtl MetallLight
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.214035 0.214035 0.214035
+Ke 0 0 0
+
+newmtl Boat_wood
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.119276 0.0388508 0.00258438
+Ke 0 0 0
+
+newmtl Paddle
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.106535 0.00765478 0.00445437
+Ke 0 0 0
+
+newmtl CharacterHat
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.00473454 0.0396797 0.00732598
+Ke 0 0 0
+
+newmtl CharacterSkin
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.650005 0.323723 0.242747
+Ke 0 0 0
+
+newmtl CharacterHair
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.220252 0.0561058 0.00847931
+Ke 0 0 0
+
+newmtl CharacterBeard
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.12371 0.030752 0.0128654
+Ke 0 0 0
+
+newmtl CharacterShirt
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0322359 0.00434319 0.0946195
+Ke 0 0 0
+
+newmtl CharacterPants
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0331027 0.0142991 0.00905899
+Ke 0 0 0
+
+newmtl CharacterShirt2
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0130158 0.0013194 0.03741
+Ke 0 0 0
+
+newmtl CharacterBoots
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0173877 0.00911843 0.00536982
+Ke 0 0 0
+
+newmtl WoodDark
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0444548 0.0169954 0.00802502
+Ke 0 0 0
+
+newmtl LeaveLight
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.190176 0.165413 0.00955346
+Ke 0 0 0
+
+newmtl FishBody
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.00412557 0.147314 0.117384
+Ke 0 0 0
+
+newmtl FishHead
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.210353 0.8 0.626335
+Ke 0 0 0
+
+newmtl FishTale
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.259799 0.13004 0.0102361
+Ke 0 0 0
+
+newmtl FishEye
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.025394 0.025394 0.025394
+Ke 0 0 0
+
+newmtl FishEyeWrapper
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.579779 0.615178 0.421091
+Ke 0 0 0
+
+newmtl FishMounth
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.303198 0.0185329 0.0112709
+Ke 0 0 0
+
+newmtl TentDown
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0468014 0.0442691 0.0469617
+Ke 0 0 0
+
+newmtl TentBase
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.5
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.538225 0.275062 0.0283115
+Ke 0 0 0
+
+newmtl TentBorder
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.8 0.582936 0.0907919
+Ke 0 0 0
+
+newmtl TentRow
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0236502 0.0173391 0.0102264
+Ke 0 0 0
+
+newmtl WoodLight
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.259799 0.223807 0.0747603
+Ke 0 0 0
+
+newmtl Rock
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.152325 0.152325 0.152325
+Ke 0 0 0
+
+newmtl Rock-2
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.197843 0.259799 0.191517
+Ke 0 0 0
+
+newmtl Rock3
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0637209 0.0637209 0.0637209
+Ke 0 0 0
+
+newmtl Coal
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.358841 0.0126146 0.00761224
+Ke 0 0 0
+
+newmtl Grass
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.00146338 0.110689 0
+Ke 0 0 0
+
+newmtl Grass-2
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.135778 0.214035 0.00182132
+Ke 0 0 0
+
+newmtl Grass-3
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0523006 0.195988 0.073985
+Ke 0 0 0
+
+newmtl Flower1
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.393115 0.0707419 0.0520051
+Ke 0 0 0
+
+newmtl FlowerMiddle
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.310813 0.268173 0.115703
+Ke 0 0 0
+
+newmtl Flower2
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0911656 0.295704 0.538225
+Ke 0 0 0
+
+newmtl Flower3
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.401969 0.0073092 0.401074
+Ke 0 0 0
+
+newmtl Cloth
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.485408 0.486897 0.207
+Ke 0 0 0
+
+newmtl material
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0331027 0.0331027 0.0331027
+Ke 0 0 0
+
+newmtl Wood-7
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0495493 0.0144819 0.00434603
+Ke 0 0 0
+
+newmtl GunOptic
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 0.5
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.0889469 0.192211 0.259799
+Ke 0 0 0
+
+newmtl HareBase
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.115639 0.116393 0.128239
+Ke 0 0 0
+
+newmtl HareLight
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.496923 0.496923 0.496923
+Ke 0 0 0
+
+newmtl HareBlack
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.03741 0.03741 0.03741
+Ke 0 0 0
+
+newmtl HareEar
+Tr 0.0000
+Tf 1.0000 1.0000 1.0000
+illum 1
+Pr 1
+Pds 1
+Pl 1
+Ka 1 1 1
+Kd 0.367238 0.1957 0.260158
+Ke 0 0 0

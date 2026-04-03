@@ -1,0 +1,15 @@
+hour = script.Parent.HingeHour
+min = script.Parent.HingeMin
+sec = script.Parent.HingeSec
+while wait(1) do
+    date = os.date('!*t')
+    print(date.hour, date.min, date.sec)
+    if date.hour > 12 then
+        hour.TargetAngle = -(date.hour - 11) * 30 - date.min / 2
+    else
+        hour.TargetAngle = -(date.hour - 3) * 30 - date.min / 2
+    end
+
+    min.TargetAngle = -date.min * 6
+    sec.TargetAngle = -date.sec * 6
+end
