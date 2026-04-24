@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4341b6b3cde4c1d46b3407a8d2c53739, type: 3}
-  m_Name: Crossbow
-  m_EditorClassIdentifier: 
-  itemName: Weapon
+  m_Script: {fileID: 11500000, guid: a34dc4f6de1db64428667bbc73509284, type: 3}
+  m_Name: BowItem
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemType: 1
+  itemName: Bow
   icon: {fileID: 21300000, guid: 1cb7e591200ff4d4496757f7c0bf41c9, type: 3}
-  prefab: {fileID: 2519248558242525457, guid: 02f725d43c199804c9af233d14fdda5a, type: 3}
   isStackable: 0
+  maxStack: 1
+  projectilePrefab: {fileID: 4499825123572757976, guid: ed09d10fb56f22c4d92ba989c105a04e, type: 3}
+  fireRate: 0.3

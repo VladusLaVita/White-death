@@ -65,7 +65,10 @@ PrefabInstance:
       addedObject: {fileID: 2275017881410731622}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: edc119beae584114fbb895b63aae1b4f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -7149127899621483980}
+      addedObject: {fileID: -2836746595136952463}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: edc119beae584114fbb895b63aae1b4f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -6471671316818398581}
   m_SourcePrefab: {fileID: 100100000, guid: edc119beae584114fbb895b63aae1b4f, type: 3}
 --- !u!1 &5812568892406929420 stripped
 GameObject:
@@ -93,7 +96,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 0.33275467, z: 0.3637085}
   m_Center: {x: 0, y: 0, z: -0.17}
---- !u!114 &-7149127899621483980
+--- !u!54 &-2836746595136952463
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812568892406929420}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-6471671316818398581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,8 +132,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5812568892406929420}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f1906889b5d9a14cbd9de228f91576b, type: 3}
+  m_Script: {fileID: 11500000, guid: d6c873283b24ebc40bd9adf15c9cd4d0, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  item: {fileID: 11400000, guid: 96f22493c27cb9941ad4d9749a776029, type: 2}
-  amount: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  speed: 5
+  lifetime: 3

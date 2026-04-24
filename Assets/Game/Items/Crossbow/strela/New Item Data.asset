@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4341b6b3cde4c1d46b3407a8d2c53739, type: 3}
-  m_Name: New Item
-  m_EditorClassIdentifier: Assembly-CSharp::Item
-  itemName: "\u041F\u0440\u0435\u0434\u043C\u0435\u0442"
+  m_Script: {fileID: 11500000, guid: a34dc4f6de1db64428667bbc73509284, type: 3}
+  m_Name: New Item Data
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemType: 0
+  itemName: Arrow
   icon: {fileID: 21300000, guid: 9960796b00fd86f4e9f8053ba5350077, type: 3}
-  prefab: {fileID: 5812568892406929420, guid: afd8e4988df304b4aa690e35e21f1237, type: 3}
-  isStackable: 0
+  isStackable: 1
+  maxStack: 99
+  projectilePrefab: {fileID: 0}
+  fireRate: 0.3

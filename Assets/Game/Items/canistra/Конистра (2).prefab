@@ -88,6 +88,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8287155361644546268
 GameObject:
@@ -99,7 +100,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8667796819104518758}
   - component: {fileID: 2095962327483026927}
-  - component: {fileID: 5620929642516921653}
   m_Layer: 0
   m_Name: "\u041A\u043E\u043D\u0438\u0441\u0442\u0440\u0430 (2)"
   m_TagString: Ammo
@@ -144,17 +144,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6901349, y: 0.9132429, z: 0.4362687}
   m_Center: {x: 0.67895466, y: 0.45015994, z: -0.14618738}
---- !u!114 &5620929642516921653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8287155361644546268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f1906889b5d9a14cbd9de228f91576b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  item: {fileID: 11400000, guid: 48c767c12bb7ce54cb8e2a55d5f09058, type: 2}
-  amount: 1
