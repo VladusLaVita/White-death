@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
         animator.SetBool("running", isRunning && inputMagnitude > 0f);
-        animator.SetFloat("forward", inputMagnitude);
+        animator.SetFloat("forward", Mathf.Ceil(inputMagnitude));
     }
 }
 
