@@ -1,7 +1,7 @@
 using NUnit.Framework.Interfaces;
 using UnityEngine;
 
-public class PickupItem : MonoBehaviour, IPickup
+public class PickupItem : MonoBehaviour
 {
     public ItemData itemData;
 
