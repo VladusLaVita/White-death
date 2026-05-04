@@ -15,6 +15,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask pickupLayer;
     [SerializeField] private KeyCode pickupKey = KeyCode.E;
 
+    [Header("Look Interaction (Airplane)")]
+    [SerializeField] private float lookInteractionRange = 4f;
+    [SerializeField] private LayerMask lookInteractionLayer;
+
     [Header("References")]
     [SerializeField] private Transform cameraTransform;
 
@@ -37,8 +41,53 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        HandlePickup();
+        HandleInteractions();
         HandleAnimation();
+    }
+
+    private void HandleInteractions()
+    {
+        if (!Input.GetKeyDown(pickupKey)) return;
+
+        // 1. Проверка взаимодействия "взглядом" (самолёт)
+        if (cameraTransform != null)
+        {
+            Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hit, lookInteractionRange, lookInteractionLayer))
+            {
+                if (hit.transform.TryGetComponent<AirplaneSceneLoader>(out var airplane))
+                {
+                    airplane.LoadScene();
+                    return; // Прерываем выполнение, чтобы не сработал подбор предметов
+                }
+            }
+        }
+
+        // 2. Стандартный подбор предметов (сфера вокруг игрока)
+        Collider[] hits = Physics.OverlapSphere(transform.position, pickupRange, pickupLayer);
+        if (hits.Length == 0) return;
+
+        Collider closest = null;
+        float minDist = float.MaxValue;
+
+        foreach (var hit in hits)
+        {
+            float dist = (hit.transform.position - transform.position).sqrMagnitude;
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = hit;
+            }
+        }
+
+        if (closest == null) return;
+
+        IPickup item = closest.GetComponent<IPickup>();
+        if (item != null)
+        {
+            animator.SetTrigger("pickup");
+            item.OnPickup();
+        }
     }
 
     private void HandleMovement()
@@ -83,40 +132,6 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmooth * Time.deltaTime);
         }
     }
-
-    private void HandlePickup()
-    {
-        if (!Input.GetKeyDown(pickupKey))
-            return;
-
-        Collider[] hits = Physics.OverlapSphere(transform.position, pickupRange, pickupLayer);
-        if (hits.Length == 0)
-            return;
-
-        Collider closest = null;
-        float minDist = float.MaxValue;
-
-        foreach (var hit in hits)
-        {
-            float dist = (hit.transform.position - transform.position).sqrMagnitude;
-            if (dist < minDist)
-            {
-                minDist = dist;
-                closest = hit;
-            }
-        }
-
-        if (closest == null)
-            return;
-
-        IPickup item = closest.GetComponent<IPickup>();
-        if (item == null)
-            return;
-
-        animator.SetTrigger("pickup");
-        item.OnPickup();
-    }
-
     private void HandleAnimation()
     {
         bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -124,9 +139,4 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("running", isRunning && inputMagnitude > 0f);
         animator.SetFloat("forward", Mathf.Ceil(inputMagnitude));
     }
-}
-
-public interface IPickup
-{
-    void OnPickup();
 }
