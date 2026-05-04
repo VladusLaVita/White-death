@@ -124,6 +124,26 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("running", isRunning && inputMagnitude > 0f);
         animator.SetFloat("forward", Mathf.Ceil(inputMagnitude));
     }
+public AudioSource footstepSource;
+public AudioClip[] footstepSounds;
+
+[Header("Настройки вариативности")]
+public float minPitch = 0.85f;
+public float maxPitch = 1.15f;
+public float minVolume = 0.4f;
+public float maxVolume = 0.6f;
+
+void Step() 
+{
+    if (footstepSounds.Length > 0)
+    {
+        AudioClip clip = footstepSounds[Random.Range(0, footstepSounds.Length)];
+
+        footstepSource.pitch = Random.Range(minPitch, maxPitch);
+
+        float randomVolume = Random.Range(minVolume, maxVolume);
+        footstepSource.PlayOneShot(clip, randomVolume);
+    }
 }
 
 public interface IPickup
