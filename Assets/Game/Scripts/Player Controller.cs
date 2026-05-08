@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
         if (bullet.TryGetComponent(out Rigidbody rb))
         {
             // Обязательно сбрасываем скорость, если префаб странно себя ведет
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
 
             // Толкаем в сторону прицела (direction)

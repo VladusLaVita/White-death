@@ -20,10 +20,14 @@ public class EnemyAI : MonoBehaviour
     [Header("Аниматор и анимации")]
     private Animator animator;
 
+    [Header("Audio preferences")]
+    private WendigoSound sound;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
+        sound = GetComponent<WendigoSound>();
 
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
         if (playerObj != null) player = playerObj.transform;
@@ -42,6 +46,7 @@ public class EnemyAI : MonoBehaviour
         if (distanceToPlayer <= detectionRadius && CanSeePlayer())
         {
             ChasePlayer();
+            sound.Cry();
         }
         else
         {

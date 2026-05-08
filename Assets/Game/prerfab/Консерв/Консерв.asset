@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a34dc4f6de1db64428667bbc73509284, type: 3}
+  m_Name: "\u041A\u043E\u043D\u0441\u0435\u0440\u0432"
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemName: Can
+  description: 'Simple can
+
+'
+  icon: {fileID: -1520708294, guid: af71c5eb8581b474996214299584dbb1, type: 3}
+  price: 0
+  ammo: {fileID: 0}
+  ammoPrefab: {fileID: 0}
+  weaponModelPrefab: {fileID: 0}
+  isStackable: 0
+  isWeapon: 0
+  isEdible: 1
+  isRanged: 0
+  ammoBox: 0
+  ammoInside: 0
+  pickUpSound: {fileID: 8300000, guid: df16cfe89280eee4d8a26e84242806a8, type: 3}
+  useSound: {fileID: 8300000, guid: 0d029dbfbc8c0cc42ad5ff7ce3a7fa6f, type: 3}
