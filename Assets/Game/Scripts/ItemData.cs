@@ -1,22 +1,26 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Inventory/Item")]
+[CreateAssetMenu(fileName = "NewItem", menuName = "Inventory/Item")]
 public class ItemData : ScriptableObject
 {
-    public enum ItemType
-    {
-        Default,
-        Weapon
-    }
-
-    public ItemType itemType;
+    [Header("General preferences")]
     public string itemName;
+    [TextArea] public string description;
     public Sprite icon;
+    public int price;
+
+    [Header("Weapon preferences")]
+    public ItemData ammo;
+    public GameObject ammoPrefab; // Префаб пули
+    public GameObject weaponModelPrefab; // Модель оружия, которая появится в руках
     public bool isStackable;
-    public int maxStack = 99;
+    public bool isWeapon;
+    public bool isEdible;
+    public bool isRanged;
+    public bool ammoBox;
+    public int ammoInside;
 
-    [Header("Weapon")]
-    public GameObject projectilePrefab;
-    public float fireRate = 0.3f;
+    [Header("Audio settings")]
+    public AudioClip pickUpSound;
+    public AudioClip useSound;
 }
-

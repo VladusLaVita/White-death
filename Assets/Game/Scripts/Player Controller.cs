@@ -1,132 +1,291 @@
+using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(Inventory))]
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
-    public float playerSpeed = 5f;
-    public float maxSpeed = 10f;
-    public float jumpHeight = 1.5f;
-    public float gravity = -9.81f;
-    public float rotationSmooth = 10f;
+    public float maxSpeed = 5f;
+    public float midSpeed = 2f;
+    public float jumpHeight = 2f;
+    public float gravityValue = -9.81f;
 
-    [Header("Pickup")]
-    [SerializeField] private float pickupRange = 2f;
-    [SerializeField] private LayerMask pickupLayer;
-    [SerializeField] private KeyCode pickupKey = KeyCode.E;
+    [Header("Interaction")]
+    public bool deadFlag = false;
+    public float interactDistance = 3f;
+    public LayerMask interactableLayer;
+    public GameObject hint;
+    public TextMeshProUGUI itemLabel;
+
+    [Header("Weapon Visuals")]
+    public Transform weaponHolder; // Объект-рука игрока
+    public float bulletForce = 10f;
+    private Transform _activeMuzzle;
+    private ItemData _currentModelItem;
 
     [Header("References")]
-    [SerializeField] private Transform cameraTransform;
+    public Animator animator;
+    public Transform cameraTransform;
+    public AudioSource audioSource;
+    public AudioClip inventorySound;
 
-    private CharacterController controller;
-    private Animator animator;
+    private CharacterController _cc;
+    private Inventory _inventory;
+    private Vector3 _velocity;
+    private Interactable _currentInteractable;
+    private ItemData lastInventoryItem;
 
-    private Vector3 velocity;
-    private float inputMagnitude;
-    private bool isGrounded;
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int SprintHash = Animator.StringToHash("Sprint");
+    private static readonly int JumpHash = Animator.StringToHash("Jump");
 
-    void Awake()
+    private float _lastInteractTime;
+    private const float InteractCooldown = 0.5f;
+
+    void Start()
     {
-        controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
 
-        if (cameraTransform == null)
-            cameraTransform = Camera.main?.transform;
+        _cc = GetComponent<CharacterController>();
+        _inventory = GetComponent<Inventory>();
+        if (cameraTransform == null) cameraTransform = Camera.main.transform;
+
+        // Подписываемся на смену предмета, чтобы обновлять визуальную модель оружия
+        _inventory.onInventoryChanged += UpdateWeaponModel;
+
+        ToggleHint(false);
+
+        UpdateWeaponModel();
     }
 
     void Update()
     {
+        HandleGravity();
         HandleMovement();
-        HandlePickup();
-        HandleAnimation();
+        HandleJump();
+        CheckInteract();
+        CheckUse();
+        HandleScroll();
     }
 
+    private void UpdateWeaponModel()
+    {
+        ItemData active = _inventory.GetActiveItem();
+
+        // 2. ГЛАВНОЕ: Если этот предмет уже отображается — ничего не делаем
+        if (active == _currentModelItem) return;
+
+        _currentModelItem = active;
+
+        // Очищаем руку
+        foreach (Transform child in weaponHolder) Destroy(child.gameObject);
+        _activeMuzzle = null;
+
+        if (active != null && active.weaponModelPrefab != null)
+        {
+            // Создаем модель в руке
+            GameObject model = Instantiate(active.weaponModelPrefab, weaponHolder);
+
+            // 1. Сбрасываем позицию и вращение в локальные 0 (чтобы легло точно в руку)
+            model.transform.localPosition = Vector3.zero;
+            model.transform.localRotation = Quaternion.identity;
+
+            // 2. ОТКЛЮЧАЕМ ГРАВИТАЦИЮ И ФИЗИКУ (чтобы не упало из рук)
+
+            SetLayerRecursively(model, LayerMask.NameToLayer("Default"));
+            if (model.TryGetComponent(out Rigidbody rb))
+            {
+                rb.isKinematic = true; // Выключает влияние гравитации и сил
+                rb.useGravity = false;
+            }
+
+            // 3. Отключаем коллайдеры (чтобы оружие не толкало игрока)
+            if (model.TryGetComponent(out Collider col))
+            {
+                col.enabled = false;
+            }
+
+            // Ищем точку вылета пули
+            _activeMuzzle = model.transform.Find("Muzzle");
+        }
+    }
+
+    private void HandleScroll()
+    {
+        if (_inventory == null || _inventory.items.Count == 0) return;
+
+        float scroll = Input.GetAxisRaw("Mouse ScrollWheel");
+        if (scroll != 0)
+        {
+            int direction = (int)Mathf.Sign(scroll);
+            _inventory.selectedSlotIndex -= direction;
+
+            if (_inventory.selectedSlotIndex < 0)
+                _inventory.selectedSlotIndex = _inventory.items.Count - 1;
+            else if (_inventory.selectedSlotIndex >= _inventory.items.Count)
+                _inventory.selectedSlotIndex = 0;
+
+            _inventory.onInventoryChanged?.Invoke();
+            audioSource.PlayOneShot(inventorySound);
+
+            lastInventoryItem = _inventory.items[_inventory.selectedSlotIndex].data;
+            animator.SetBool("Armed", lastInventoryItem.isRanged);
+        }
+    }
+
+    private void CheckUse()
+    {
+        if (!Input.GetKeyDown(KeyCode.Mouse0)) return;
+
+        if (_currentInteractable != null)
+        {
+            _currentInteractable.Use();
+            return;
+        }
+
+        ItemData activeItem = _inventory.GetActiveItem();
+        if (activeItem != null) UseItemFromInventory(activeItem);
+    }
+
+    private void UseItemFromInventory(ItemData itemData)
+    {
+        if (itemData.isEdible) EatItem(itemData);
+        else if (itemData.isWeapon)
+        {
+            if (itemData.isRanged) Shoot(itemData);
+            else MeleeAttack(itemData);
+        }
+    }
+
+    private void Shoot(ItemData data)
+    {
+        // Поиск патронов в инвентаре
+        InventoryItem ammoSlot = _inventory.items.Find(x => x.data == data.ammo);
+
+        if (ammoSlot != null && ammoSlot.count > 0)
+        {
+            _inventory.RemoveItem(data.ammo, 1);
+
+            animator.SetTrigger("Shoot");
+            audioSource.PlayOneShot(data.useSound);
+
+            SpawnPhysicalBullet(data);
+        }
+        else
+        {
+            Debug.Log("Нет патронов!");
+        }
+    }
+
+    private void SpawnPhysicalBullet(ItemData itemData)
+    {
+        if (itemData.ammoPrefab == null || _activeMuzzle == null) return;
+
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        Vector3 targetPoint = Physics.Raycast(ray, out RaycastHit hit, 200f) ? hit.point : ray.GetPoint(200f);
+        Vector3 direction = (targetPoint - _activeMuzzle.position).normalized;
+
+        // 1. Создаем объект
+        GameObject bullet = Instantiate(itemData.ammoPrefab, _activeMuzzle.position, Quaternion.LookRotation(direction));
+
+        // 2. КОРРЕКЦИЯ ПОВОРОТА
+        // Если стрела в префабе стоит вертикально (наконечник по Y), 
+        // поворачиваем её на 90 градусов по X, чтобы она легла вдоль вектора полёта.
+        bullet.transform.Rotate(90, 0, 0);
+
+        // 3. ПРИЛОЖЕНИЕ СИЛЫ
+        if (bullet.TryGetComponent(out Rigidbody rb))
+        {
+            // Обязательно сбрасываем скорость, если префаб странно себя ведет
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+
+            // Толкаем в сторону прицела (direction)
+            rb.AddForce(direction * bulletForce, ForceMode.Impulse);
+        }
+    }
+
+
+    private void EatItem(ItemData itemData)
+    {
+        animator.SetTrigger("Eat");
+        audioSource.PlayOneShot(itemData.useSound);
+        _inventory.RemoveItem(itemData, 1);
+    }
+
+    private void MeleeAttack(ItemData itemData)
+    {
+        animator.SetTrigger("Strike");
+        audioSource.PlayOneShot(itemData.useSound);
+    }
+
+    // --- Остальные стандартные методы (Movement, Gravity, Interact) остаются без изменений ---
     private void HandleMovement()
     {
-        isGrounded = controller.isGrounded;
-
-        if (isGrounded && velocity.y < 0f)
-            velocity.y = -5f;
-
         float inputX = Input.GetAxis("Horizontal");
         float inputZ = Input.GetAxis("Vertical");
+        bool isGrounded = _cc.isGrounded;
+        bool isSprinting = Input.GetKey(KeyCode.LeftShift) && isGrounded;
+        float currentSpeed = isSprinting ? maxSpeed : midSpeed;
+        Vector3 move = transform.right * inputX + transform.forward * inputZ;
+        if (move.sqrMagnitude > 1f) move.Normalize();
+        _cc.Move(move * (currentSpeed * Time.deltaTime) + _velocity * Time.deltaTime);
+        animator.SetBool(SprintHash, isSprinting);
+        animator.SetFloat(SpeedHash, move.magnitude * (currentSpeed / maxSpeed));
+    }
 
-        inputMagnitude = Mathf.Clamp01(new Vector2(inputX, inputZ).magnitude);
-
-        Vector3 move = Vector3.zero;
-
-        if (cameraTransform != null)
+    private void HandleJump()
+    {
+        if (_cc.isGrounded && Input.GetButtonDown("Jump"))
         {
-            Vector3 forward = cameraTransform.forward;
-            Vector3 right = cameraTransform.right;
-
-            forward.y = 0f;
-            right.y = 0f;
-
-            move = (right * inputX + forward * inputZ).normalized;
-        }
-
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-        float speed = isRunning ? maxSpeed : playerSpeed;
-
-        velocity.y += gravity * Time.deltaTime;
-
-        if (Input.GetButtonDown("Jump") && isGrounded)
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-
-        Vector3 motion = move * speed + Vector3.up * velocity.y;
-        controller.Move(motion * Time.deltaTime);
-
-        if (move.sqrMagnitude > 0.001f)
-        {
-            Quaternion targetRotation = Quaternion.LookRotation(move);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSmooth * Time.deltaTime);
+            animator.SetTrigger(JumpHash);
+            _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravityValue);
         }
     }
 
-    private void HandlePickup()
+    private void HandleGravity()
     {
-        if (!Input.GetKeyDown(pickupKey))
-            return;
+        if (_cc.isGrounded && _velocity.y < 0) _velocity.y = -2f;
+        _velocity.y += gravityValue * Time.deltaTime;
+    }
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, pickupRange, pickupLayer);
-        if (hits.Length == 0)
-            return;
-
-        Collider closest = null;
-        float minDist = float.MaxValue;
-
-        foreach (var hit in hits)
+    private void CheckInteract()
+    {
+        Ray ray = new Ray(cameraTransform.position, cameraTransform.forward);
+        if (Physics.Raycast(ray, out RaycastHit hit, interactDistance, interactableLayer))
         {
-            float dist = (hit.transform.position - transform.position).sqrMagnitude;
-            if (dist < minDist)
+            if (hit.collider.TryGetComponent(out Interactable interactable))
             {
-                minDist = dist;
-                closest = hit;
+                if (_currentInteractable != interactable)
+                {
+                    _currentInteractable = interactable;
+                    UpdateUI(interactable.interactionName);
+                }
+                if (Input.GetKeyDown(KeyCode.E))
+                {
+                    _currentInteractable.Interact();
+                    if (_currentInteractable.TryGetComponent(out Item item))
+                        audioSource.PlayOneShot(item.data.pickUpSound);
+                }
+                return;
             }
         }
-
-        if (closest == null)
-            return;
-
-        IPickup item = closest.GetComponent<IPickup>();
-        if (item == null)
-            return;
-
-        animator.SetTrigger("pickup");
-        item.OnPickup();
+        if (Time.time - _lastInteractTime > InteractCooldown) ClearCurrentItem();
     }
 
-    private void HandleAnimation()
+    private void UpdateUI(string itemName)
     {
-        bool isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-
-        animator.SetBool("running", isRunning && inputMagnitude > 0f);
-        animator.SetFloat("forward", inputMagnitude);
+        _lastInteractTime = Time.time;
+        if (itemLabel != null) itemLabel.text = itemName;
+        ToggleHint(true);
     }
-}
-
-public interface IPickup
-{
-    void OnPickup();
+    private void SetLayerRecursively(GameObject obj, int newLayer)
+    {
+        obj.layer = newLayer;
+        foreach (Transform child in obj.transform)
+        {
+            SetLayerRecursively(child.gameObject, newLayer);
+        }
+    }
+    private void ClearCurrentItem() { _currentInteractable = null; ToggleHint(false); }
+    private void ToggleHint(bool state) { if (hint != null && hint.activeSelf != state) hint.SetActive(state); }
 }

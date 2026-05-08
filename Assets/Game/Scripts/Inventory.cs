@@ -1,68 +1,61 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+[System.Serializable]
+public class InventoryItem
+{
+    public ItemData data;
+    public int count;
+    public InventoryItem(ItemData data, int count) { this.data = data; this.count = count; }
+}
 
 public class Inventory : MonoBehaviour
 {
-    [SerializeField] private InventorySlot[] slots;
-    [SerializeField] private int selectedIndex = 0;
+    public int capacity = 10;
+    public List<InventoryItem> items = new List<InventoryItem>();
+    public int selectedSlotIndex = 0;
 
-    private void Start()
-    {
-        UpdateSelection();
-    }
+    public delegate void OnInventoryChanged();
+    public OnInventoryChanged onInventoryChanged;
 
-    private void Update()
+    public bool AddItem(ItemData data, int amount = 1)
     {
-        HandleScroll();
-    }
+        if (data.ammoBox) amount = data.ammoInside;
 
-    public void AddItem(ItemData item)
-    {
-        if (item.isStackable)
+        if (data.isStackable)
         {
-            foreach (var slot in slots)
+            InventoryItem existing = items.Find(i => i.data == data);
+            if (existing != null)
             {
-                if (slot.CanAdd(item))
-                {
-                    slot.Add(1);
-                    return;
-                }
+                existing.count += amount;
+                onInventoryChanged?.Invoke();
+                return true;
             }
         }
 
-        foreach (var slot in slots)
-        {
-            if (slot.IsEmpty)
-            {
-                slot.SetItem(item, 1);
-                return;
-            }
-        }
+        if (items.Count >= capacity) return false;
 
-        Debug.Log("Inventory full");
+        items.Add(new InventoryItem(data, amount));
+        onInventoryChanged?.Invoke(); // Это заставит PlayerController вызвать UpdateWeaponModel
+        return true;
     }
 
-    private void HandleScroll()
+    public ItemData GetActiveItem()
     {
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-
-        if (scroll > 0f)
-            selectedIndex = (selectedIndex + 1) % slots.Length;
-        else if (scroll < 0f)
-            selectedIndex = (selectedIndex - 1 + slots.Length) % slots.Length;
-
-        UpdateSelection();
+        if (items.Count > 0 && selectedSlotIndex < items.Count)
+            return items[selectedSlotIndex].data;
+        return null;
     }
 
-    private void UpdateSelection()
+    public bool RemoveItem(ItemData data, int amount = 1)
     {
-        for (int i = 0; i < slots.Length; i++)
-        {
-            slots[i].transform.localScale = (i == selectedIndex) ? Vector3.one * 1.2f : Vector3.one;
-        }
-    }
+        InventoryItem item = items.Find(i => i.data == data);
+        if (item == null) return false;
 
-    public ItemData GetSelectedItem()
-    {
-        return slots[selectedIndex].GetItem();
+        item.count -= amount;
+        if (item.count <= 0) items.Remove(item);
+
+        onInventoryChanged?.Invoke();
+        return true;
     }
 }
