@@ -9,6 +9,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Health>(out Health hp))
         {
             hp.GetDamage(damage);
+            Debug.Log($"{collision.gameObject.name}");
         }
     }
 }
