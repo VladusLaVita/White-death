@@ -3,12 +3,12 @@ using UnityEngine;
 public class EntityController : MonoBehaviour
 {
     public bool deadFlag = false;
+    public RagdollController ragdollController;
 
-    void Update()
+     public void Die()
     {
-        if (deadFlag == true)
-        {
-            Destroy(gameObject);
-        }
+        ragdollController.isRagdollActive=true;
     }
+
+    
 }

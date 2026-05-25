@@ -92,7 +92,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &2025948035688828106
 MonoBehaviour:
@@ -153,8 +152,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5.603348, y: 44.30096, z: 4.6796317}
-  m_Center: {x: 0.16326264, y: -20.493425, z: 0.091857605}
+  m_Size: {x: 16.585268, y: 44.300964, z: 4.6796317}
+  m_Center: {x: -0.5350778, y: -20.493425, z: 0.091857605}
 --- !u!65 &7954894789418168612
 BoxCollider:
   m_ObjectHideFlags: 0

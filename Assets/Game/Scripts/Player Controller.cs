@@ -286,6 +286,11 @@ public class PlayerController : MonoBehaviour
             SetLayerRecursively(child.gameObject, newLayer);
         }
     }
+
+    public void Die()
+    {
+        
+    }
     private void ClearCurrentItem() { _currentInteractable = null; ToggleHint(false); }
     private void ToggleHint(bool state) { if (hint != null && hint.activeSelf != state) hint.SetActive(state); }
 }

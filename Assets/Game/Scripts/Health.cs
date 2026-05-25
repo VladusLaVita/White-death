@@ -35,4 +35,9 @@ public class Health : MonoBehaviour
     {
         GetDamage(-health);
     }
+    public void Die()
+    {
+        if (playerController != null) playerController.Die();
+        else entityController.Die();
+    }
 }
