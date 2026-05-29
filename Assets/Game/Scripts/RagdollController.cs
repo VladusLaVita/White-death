@@ -16,12 +16,9 @@ public class RagdollController : MonoBehaviour
     private void Awake()
     {
         if (characterAnimator == null)
-            characterAnimator = GetComponent<Animator>();
+            characterAnimator = GetComponentInChildren<Animator>(); // ← было GetComponent
 
-        // Собираем все Rigidbody в иерархии
         allRigidbodies = GetComponentsInChildren<Rigidbody>();
-
-        // Изначально отключаем физику, чтобы анимация/управление работали корректно
         SetRagdollPhysics(false);
     }
 
@@ -34,28 +31,25 @@ public class RagdollController : MonoBehaviour
     /// <param name="forceAmount">Мощность удара</param>
     public void ActivateRagdoll(Vector3 impactPoint, Vector3 forceDirection, float forceAmount)
     {
-        if (isRagdollActive) return;
+        Debug.Log("=== ActivateRagdoll НАЧАЛО ===");
+        Debug.Log($"isRagdollActive: {isRagdollActive}");
+        Debug.Log("Шаг 1");
 
-        isRagdollActive = true;
+        bool animatorExists = characterAnimator != null;
+        Debug.Log($"Шаг 2 - Animator exists: {animatorExists}");
 
-        // Отключаем аниматор, чтобы он не переписывал позы
+        int rbCount = allRigidbodies != null ? allRigidbodies.Length : -1;
+        Debug.Log($"Шаг 3 - Rigidbodies: {rbCount}");
+
         if (characterAnimator != null)
             characterAnimator.enabled = false;
 
-        // Включаем физику
         SetRagdollPhysics(true);
 
-        // Применяем силу ко всем частям тела
         foreach (var rb in allRigidbodies)
         {
             if (rb != null)
-            {
-                rb.AddForceAtPosition(
-                    forceDirection.normalized * forceAmount * forceMultiplier,
-                    impactPoint,
-                    ForceMode.Impulse
-                );
-            }
+                Debug.Log($"Rigidbody: {rb.gameObject.name}, isKinematic: {rb.isKinematic}");
         }
     }
 
