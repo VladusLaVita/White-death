@@ -6,8 +6,7 @@ public class Health : MonoBehaviour
     [Header("Health preferences")]
     public float maxHealth = 100f;
 
-    [SerializeField]
-    private float currentHealth;
+    public float currentHealth;
     [SerializeField]
     private PlayerController playerController;
     [SerializeField]
@@ -16,28 +15,21 @@ public class Health : MonoBehaviour
 
     void Start()
     {
-        maxHealth = currentHealth;
+        currentHealth = maxHealth; // ← должно быть так
     }
 
-    public void GetDamage(float damage)
+    public void GetDamage(float damage, Vector3 forceDir, Vector3 impactPoint)
     {
         currentHealth -= damage;
+        Debug.Log($"Здоровья осталось: {currentHealth}");
+
         if (currentHealth <= 0)
         {
-            if (gameObject.CompareTag("Player")) playerController.deadFlag = true;
-            else if (gameObject.CompareTag("Entity")) entityController.deadFlag = true;
-            else Destroy(gameObject);
+            Debug.Log("Вызываю Die()");
+            if (gameObject.CompareTag("Player"))
+                playerController.Die();
+            else if (gameObject.CompareTag("Entity"))
+                entityController.Die(forceDir, impactPoint);
         }
-
-    }
-
-    public void GetHealth(float health)
-    {
-        GetDamage(-health);
-    }
-    public void Die()
-    {
-        if (playerController != null) playerController.Die();
-        else entityController.Die();
     }
 }

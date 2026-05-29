@@ -11,6 +11,7 @@ TagManager:
   - Closet
   - Enemy
   - Item
+  - Entity
   layers:
   - Default
   - TransparentFX
